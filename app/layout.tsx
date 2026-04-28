@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { Inter, Syne } from "next/font/google"
+import { Inter, Orbitron } from "next/font/google"
 import "./globals.css"
 
 const inter = Inter({
@@ -7,10 +7,10 @@ const inter = Inter({
   variable: "--font-inter",
 })
 
-const syne = Syne({
+const orbitron = Orbitron({
   subsets: ["latin"],
-  variable: "--font-syne",
-  weight: ["700", "800"],
+  variable: "--font-orbitron",
+  weight: ["400", "500", "600", "700", "800", "900"],
 })
 
 export const metadata: Metadata = {
@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${syne.variable} bg-background`}>
+    <html lang="en" className={`${inter.variable} ${orbitron.variable} bg-background`}>
       <body className="font-sans">{children}</body>
     </html>
   )
