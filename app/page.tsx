@@ -17,10 +17,12 @@ export default function Home() {
         <div className="absolute bottom-0 right-0 w-[600px] h-[500px] bg-[radial-gradient(ellipse,rgba(224,64,160,0.07)_0%,transparent_60%)] pointer-events-none" />
 
         {/* Globe with orbiting plane */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="relative w-[700px] h-[700px]">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+          <div className="relative flex items-center justify-center">
             <Globe />
-            <OrbitingPlane />
+            <div className="absolute inset-0 w-[700px] h-[700px]">
+              <OrbitingPlane />
+            </div>
           </div>
         </div>
 

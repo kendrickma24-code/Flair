@@ -293,7 +293,9 @@ export function Globe() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full opacity-30"
+      width={700}
+      height={700}
+      className="w-[700px] h-[700px] opacity-30"
     />
   )
 }
