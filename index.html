@@ -247,16 +247,6 @@
     return { x: cx + x, y: cy + y, z: z };
   }
 
-  var continents = [
-    [[37,10],[33,12],[30,32],[22,37],[11,42],[2,42],[-5,40],[-11,37],[-17,36],[-26,33],[-34,26],[-35,19],[-30,17],[-22,14],[-16,12],[-8,14],[-2,10],[2,10],[6,2],[4,-8],[5,-15],[10,-16],[14,-17],[16,-16],[14,-12],[10,-5],[5,1],[2,8],[6,10],[10,14],[16,14],[22,14],[28,16],[33,12],[36,6],[37,10]],
-    [[36,28],[41,28],[46,24],[48,18],[46,14],[48,10],[52,6],[51,3],[44,8],[43,16],[46,14],[50,22],[54,18],[56,22],[60,22],[64,14],[68,14],[70,26],[71,28],[70,18],[62,6],[58,5],[51,2],[44,8],[43,16],[36,28]],
-    [[36,28],[30,32],[22,38],[12,44],[2,42],[10,78],[6,80],[12,80],[18,84],[22,88],[18,94],[12,100],[4,100],[1,104],[10,107],[15,108],[22,114],[25,121],[30,120],[33,131],[37,122],[40,124],[43,132],[47,139],[50,127],[55,105],[60,100],[51,80],[60,90],[70,70],[80,74],[80,60],[72,44],[68,54],[64,60],[60,56],[55,68],[60,50],[62,50],[64,40],[68,36],[70,30],[68,54],[62,60],[56,68],[50,80],[45,84],[40,50],[36,36],[30,32],[36,28]],
-    [[-8,116],[-8,140],[-22,114],[-30,115],[-32,116],[-34,134],[-38,146],[-38,148],[-34,151],[-30,153],[-20,148],[-16,140],[-12,136],[-14,128],[-8,116]],
-    [[71,-156],[68,-166],[60,-168],[56,-132],[48,-124],[42,-124],[36,-122],[30,-118],[24,-110],[20,-105],[16,-92],[16,-82],[20,-80],[24,-76],[28,-80],[32,-80],[36,-76],[40,-74],[44,-68],[48,-70],[52,-56],[60,-64],[68,-52],[72,-70],[76,-72],[80,-80],[80,-100],[76,-110],[72,-128],[71,-156]],
-    [[10,-62],[6,-60],[2,-52],[-4,-44],[-8,-36],[-16,-40],[-20,-40],[-28,-48],[-34,-52],[-38,-58],[-42,-64],[-46,-68],[-50,-70],[-54,-68],[-56,-62],[-52,-58],[-48,-54],[-44,-52],[-40,-48],[-36,-44],[-30,-38],[-24,-42],[-20,-44],[-16,-40],[-12,-38],[-8,-36],[-4,-38],[0,-50],[-4,-60],[-6,-72],[-10,-76],[-4,-80],[0,-80],[4,-76],[8,-78],[10,-74],[8,-70],[4,-68],[0,-66],[-6,-60],[-2,-52],[6,-52],[8,-60],[10,-62]],
-    [[60,-44],[64,-52],[68,-54],[72,-70],[76,-72],[80,-66],[78,-50],[72,-44],[66,-36],[60,-44]]
-  ];
-
   var routes = [
     { a: [47.4,-122.3], b: [34.0,-118.2] },
     { a: [21.3,-157.8], b: [47.4,-122.3] },
@@ -268,6 +258,77 @@
 
   var rot = 0;
   var routeProgress = routes.map(function() { return Math.random(); });
+  var geoData = null;
+
+  // Load accurate world GeoJSON from Natural Earth
+  fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
+    .then(function(res) { return res.json(); })
+    .then(function(topology) {
+      // Convert TopoJSON to GeoJSON
+      geoData = topojsonFeature(topology, topology.objects.countries);
+      animate();
+    })
+    .catch(function() {
+      // Fallback: start animation without detailed countries
+      animate();
+    });
+
+  // Minimal TopoJSON to GeoJSON converter
+  function topojsonFeature(topology, obj) {
+    var arcs = topology.arcs;
+    var transform = topology.transform;
+    var scale = transform ? transform.scale : [1, 1];
+    var translate = transform ? transform.translate : [0, 0];
+
+    function decodeArc(arcIndex) {
+      var arc = arcs[arcIndex < 0 ? ~arcIndex : arcIndex];
+      var coords = [];
+      var x = 0, y = 0;
+      for (var i = 0; i < arc.length; i++) {
+        x += arc[i][0];
+        y += arc[i][1];
+        coords.push([x * scale[0] + translate[0], y * scale[1] + translate[1]]);
+      }
+      if (arcIndex < 0) coords.reverse();
+      return coords;
+    }
+
+    function decodeRing(ring) {
+      var coords = [];
+      for (var i = 0; i < ring.length; i++) {
+        var arcCoords = decodeArc(ring[i]);
+        if (i > 0) arcCoords = arcCoords.slice(1);
+        coords = coords.concat(arcCoords);
+      }
+      return coords;
+    }
+
+    var features = [];
+    var geometries = obj.geometries;
+    for (var i = 0; i < geometries.length; i++) {
+      var geom = geometries[i];
+      var polygons = [];
+      if (geom.type === 'Polygon') {
+        var rings = [];
+        for (var j = 0; j < geom.arcs.length; j++) {
+          rings.push(decodeRing(geom.arcs[j]));
+        }
+        polygons.push(rings);
+      } else if (geom.type === 'MultiPolygon') {
+        for (var k = 0; k < geom.arcs.length; k++) {
+          var rings2 = [];
+          for (var l = 0; l < geom.arcs[k].length; l++) {
+            rings2.push(decodeRing(geom.arcs[k][l]));
+          }
+          polygons.push(rings2);
+        }
+      }
+      if (polygons.length > 0) {
+        features.push({ polygons: polygons });
+      }
+    }
+    return features;
+  }
 
   function drawGlobe(rotation) {
     ctx.clearRect(0, 0, SIZE, SIZE);
@@ -275,6 +336,8 @@
     ctx.arc(cx, cy, R, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(10,16,30,1)';
     ctx.fill();
+    
+    // Draw latitude lines
     for (var lat = -80; lat <= 80; lat += 20) {
       ctx.beginPath();
       var first = true;
@@ -287,6 +350,8 @@
       ctx.lineWidth = 0.5;
       ctx.stroke();
     }
+    
+    // Draw longitude lines
     for (var lo2 = -180; lo2 < 180; lo2 += 30) {
       ctx.beginPath();
       var first2 = true;
@@ -299,22 +364,47 @@
       ctx.lineWidth = 0.5;
       ctx.stroke();
     }
-    for (var ci = 0; ci < continents.length; ci++) {
-      var poly = continents[ci];
-      ctx.beginPath();
-      var cf = true;
-      for (var pi = 0; pi < poly.length; pi++) {
-        var pp = project(poly[pi][0], poly[pi][1], rotation);
-        if (pp.z < 0) { cf = true; continue; }
-        if (cf) { ctx.moveTo(pp.x, pp.y); cf = false; } else { ctx.lineTo(pp.x, pp.y); }
+    
+    // Draw countries from GeoJSON
+    if (geoData) {
+      for (var fi = 0; fi < geoData.length; fi++) {
+        var feature = geoData[fi];
+        for (var pi = 0; pi < feature.polygons.length; pi++) {
+          var polygon = feature.polygons[pi];
+          // Only draw outer ring (index 0)
+          var ring = polygon[0];
+          ctx.beginPath();
+          var cf = true;
+          var lastVisible = false;
+          for (var ci = 0; ci < ring.length; ci++) {
+            var coord = ring[ci];
+            var lon3 = coord[0];
+            var lat3 = coord[1];
+            var pp = project(lat3, lon3, rotation);
+            var visible = pp.z > 0;
+            if (!visible) {
+              cf = true;
+              lastVisible = false;
+              continue;
+            }
+            if (cf || !lastVisible) {
+              ctx.moveTo(pp.x, pp.y);
+              cf = false;
+            } else {
+              ctx.lineTo(pp.x, pp.y);
+            }
+            lastVisible = visible;
+          }
+          ctx.fillStyle = 'rgba(90,130,220,0.25)';
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(120,170,255,0.35)';
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
       }
-      ctx.closePath();
-      ctx.fillStyle = 'rgba(90,130,220,0.25)';
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(120,170,255,0.45)';
-      ctx.lineWidth = 0.8;
-      ctx.stroke();
     }
+    
+    // Draw flight routes
     for (var ri = 0; ri < routes.length; ri++) {
       var route = routes[ri];
       var la = route.a[0], lo = route.a[1], lb = route.b[0], lb2 = route.b[1];
@@ -345,6 +435,8 @@
       }
       routeProgress[ri] = (routeProgress[ri] + 0.0008) % 1;
     }
+    
+    // Edge fade effect
     var eg = ctx.createRadialGradient(cx, cy, R * 0.65, cx, cy, R);
     eg.addColorStop(0, 'transparent');
     eg.addColorStop(1, 'rgba(8,12,20,0.9)');
@@ -364,8 +456,6 @@
     drawGlobe(rot);
     requestAnimationFrame(animate);
   }
-
-  animate();
 })();
 </script>
 
