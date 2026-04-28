@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Globe } from "@/components/globe"
+import { OrbitingPlane } from "@/components/orbiting-plane"
 import { PhoneMockupFeed, PhoneMockupDiscover } from "@/components/phone-mockup"
 import { Footer } from "@/components/footer"
 
@@ -15,28 +16,12 @@ export default function Home() {
         <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[900px] h-[700px] bg-[radial-gradient(ellipse,rgba(123,95,232,0.14)_0%,transparent_60%)] pointer-events-none" />
         <div className="absolute bottom-0 right-0 w-[600px] h-[500px] bg-[radial-gradient(ellipse,rgba(224,64,160,0.07)_0%,transparent_60%)] pointer-events-none" />
 
-        {/* Globe */}
-        <Globe />
-
-        {/* Flying plane */}
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          <svg
-            className="absolute w-8 h-8 opacity-0 animate-plane"
-            viewBox="0 0 32 32"
-            fill="none"
-            style={{ filter: "drop-shadow(0 0 6px rgba(123,95,232,0.7))" }}
-          >
-            <defs>
-              <linearGradient id="plane-grad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stopColor="#7B5FE8" />
-                <stop offset="100%" stopColor="#E040A0" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M2 16 L26 6 L28 10 L18 14 L22 26 L18 24 L14 18 L8 20 L9 24 L5 22 Z"
-              fill="url(#plane-grad)"
-            />
-          </svg>
+        {/* Globe with orbiting plane */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="relative w-[700px] h-[700px]">
+            <Globe />
+            <OrbitingPlane />
+          </div>
         </div>
 
         {/* Badge */}

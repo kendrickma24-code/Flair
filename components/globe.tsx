@@ -291,11 +291,9 @@ export function Globe() {
   }, [])
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 opacity-30">
-      <canvas
-        ref={canvasRef}
-        className="w-[700px] h-[700px] max-w-[90vw] max-h-[90vw]"
-      />
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full opacity-30"
+    />
   )
 }
