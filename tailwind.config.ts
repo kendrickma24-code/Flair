@@ -10,7 +10,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],
-        display: ["var(--font-orbitron)", "sans-serif"],
+        display: ["var(--font-space-grotesk)", "sans-serif"],
       },
       colors: {
         background: "var(--background)",
