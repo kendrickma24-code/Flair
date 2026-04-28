@@ -10,7 +10,7 @@ export function Navbar() {
       </Link>
       <ul className="hidden md:flex items-center gap-8">
         <li>
-          <Link href="#features" className="text-sm text-muted hover:text-foreground transition-colors">
+          <Link href="/#features" className="text-sm text-muted hover:text-foreground transition-colors">
             Features
           </Link>
         </li>
@@ -20,13 +20,13 @@ export function Navbar() {
           </Link>
         </li>
         <li>
-          <Link href="#support" className="text-sm text-muted hover:text-foreground transition-colors">
+          <Link href="/#support" className="text-sm text-muted hover:text-foreground transition-colors">
             Support
           </Link>
         </li>
       </ul>
       <Link
-        href="#support"
+        href="/#support"
         className="grad-bg text-foreground text-sm font-medium px-5 py-2 rounded-full hover:opacity-80 transition-opacity"
       >
         Get notified
