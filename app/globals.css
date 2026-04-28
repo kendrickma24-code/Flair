@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #080C14;
+  --foreground: #FFFFFF;
+  --card: #0E1420;
+  --card-foreground: #FFFFFF;
+  --card-secondary: #131926;
+  --muted: #7A8499;
+  --muted-foreground: #4A5268;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-mid: rgba(255, 255, 255, 0.14);
+  --primary: #7B5FE8;
+  --primary-foreground: #FFFFFF;
+  --accent: #E040A0;
+  --blue: #4A9EF8;
+  --blue-dim: rgba(74, 158, 248, 0.12);
+  --radius: 0.5rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.grad-bg {
+  background: linear-gradient(135deg, #7B5FE8 0%, #E040A0 100%);
+}
+
+.grad-text {
+  background: linear-gradient(135deg, #7B5FE8 0%, #E040A0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-16px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+}
+
+@keyframes planeFly {
+  0% {
+    opacity: 0;
+    transform: translate(-60px, 60vh) rotate(-18deg);
+  }
+  5% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(100vw + 60px), 15vh) rotate(-18deg);
+  }
+}
+
+.animate-fadeUp {
+  animation: fadeUp 0.5s ease both;
+}
+
+.animate-fadeUp-1 {
+  animation: fadeUp 0.5s 0.1s ease both;
+}
+
+.animate-fadeUp-2 {
+  animation: fadeUp 0.5s 0.2s ease both;
+}
+
+.animate-fadeUp-3 {
+  animation: fadeUp 0.5s 0.3s ease both;
+}
+
+.animate-fadeUp-4 {
+  animation: fadeUp 0.5s 0.4s ease both;
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-pulse-dot {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-plane {
+  animation: planeFly 12s linear infinite;
+}
