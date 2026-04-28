@@ -18,11 +18,9 @@ export default function Home() {
 
         {/* Globe with orbiting plane */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-          <div className="relative flex items-center justify-center">
+          <div className="relative w-[700px] h-[700px]">
             <Globe />
-            <div className="absolute inset-0 w-[700px] h-[700px]">
-              <OrbitingPlane />
-            </div>
+            <OrbitingPlane />
           </div>
         </div>
 

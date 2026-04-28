@@ -295,7 +295,7 @@ export function Globe() {
       ref={canvasRef}
       width={700}
       height={700}
-      className="w-[700px] h-[700px] opacity-30"
+      className="absolute inset-0 w-[700px] h-[700px] opacity-30"
     />
   )
 }
