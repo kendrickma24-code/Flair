@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Globe } from "@/components/globe"
-import { OrbitingPlane } from "@/components/orbiting-plane"
 import { PhoneMockupFeed, PhoneMockupDiscover } from "@/components/phone-mockup"
 import { Footer } from "@/components/footer"
 
@@ -16,12 +15,9 @@ export default function Home() {
         <div className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-[900px] h-[700px] bg-[radial-gradient(ellipse,rgba(123,95,232,0.14)_0%,transparent_60%)] pointer-events-none" />
         <div className="absolute bottom-0 right-0 w-[600px] h-[500px] bg-[radial-gradient(ellipse,rgba(224,64,160,0.07)_0%,transparent_60%)] pointer-events-none" />
 
-        {/* Globe with orbiting plane */}
+        {/* Globe */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
-          <div className="relative w-[700px] h-[700px]">
-            <Globe />
-            <OrbitingPlane />
-          </div>
+          <Globe />
         </div>
 
         {/* Badge */}
