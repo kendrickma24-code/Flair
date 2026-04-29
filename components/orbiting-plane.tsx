@@ -55,39 +55,62 @@ export function OrbitingPlane() {
       }}
     >
       <svg
-        width="48"
-        height="48"
-        viewBox="0 0 48 48"
+        width="56"
+        height="56"
+        viewBox="0 0 56 56"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          <linearGradient id="plane-gradient" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#7B5FE8" />
-            <stop offset="100%" stopColor="#E040A0" />
+          <linearGradient id="plane-gradient" x1="0" y1="28" x2="56" y2="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stopColor="#E040A0" />
+            <stop offset="100%" stopColor="#7B5FE8" />
+          </linearGradient>
+          <linearGradient id="window-gradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#A0E0FF" />
+            <stop offset="100%" stopColor="#60B0E0" />
           </linearGradient>
         </defs>
-        {/* Realistic airplane silhouette */}
-        <g transform="translate(24, 24) rotate(0) translate(-24, -24)">
-          {/* Fuselage */}
+        {/* Commercial airliner shape */}
+        <g>
+          {/* Fuselage - long cylindrical body */}
           <path
-            d="M4 24C4 24 8 22.5 14 22.5L38 22C42 22 44 23 44 24C44 25 42 26 38 26L14 25.5C8 25.5 4 24 4 24Z"
+            d="M8 28C8 28 10 25 16 25L48 26C52 26.5 54 27.5 54 28C54 28.5 52 29.5 48 30L16 31C10 31 8 28 8 28Z"
             fill="url(#plane-gradient)"
           />
-          {/* Main wings */}
+          {/* Nose cone */}
           <path
-            d="M18 24L16 14L20 13L24 22L28 13L32 14L30 24L32 34L28 35L24 26L20 35L16 34L18 24Z"
+            d="M48 26C52 26.5 56 27.5 56 28C56 28.5 52 29.5 48 30L48 26Z"
+            fill="#9070E8"
+          />
+          {/* Main wings - swept back */}
+          <path
+            d="M24 28L18 8L22 7L28 25L34 7L38 8L32 28L38 48L34 49L28 31L22 49L18 48L24 28Z"
             fill="url(#plane-gradient)"
           />
-          {/* Tail fin */}
+          {/* Horizontal stabilizer (tail wings) */}
           <path
-            d="M8 24L6 18L10 17L12 24L10 31L6 30L8 24Z"
+            d="M12 28L10 20L13 19L15 27L15 29L13 37L10 36L12 28Z"
             fill="url(#plane-gradient)"
           />
-          {/* Cockpit window */}
-          <ellipse cx="40" cy="24" rx="2" ry="1.5" fill="rgba(255,255,255,0.6)" />
-          {/* Engine glow */}
-          <circle cx="6" cy="24" r="2" fill="rgba(224,64,160,0.6)" />
+          {/* Vertical tail fin */}
+          <path
+            d="M10 28L8 16L12 15L14 26L14 28L10 28Z"
+            fill="url(#plane-gradient)"
+          />
+          {/* Cockpit windows */}
+          <ellipse cx="50" cy="27.5" rx="2.5" ry="1" fill="url(#window-gradient)" />
+          {/* Cabin windows */}
+          <circle cx="44" cy="27" r="0.8" fill="rgba(160,224,255,0.7)" />
+          <circle cx="41" cy="27" r="0.8" fill="rgba(160,224,255,0.7)" />
+          <circle cx="38" cy="27" r="0.8" fill="rgba(160,224,255,0.7)" />
+          <circle cx="35" cy="27" r="0.8" fill="rgba(160,224,255,0.7)" />
+          {/* Engine pods under wings */}
+          <ellipse cx="25" cy="30" rx="3" ry="1.5" fill="#6050C8" />
+          <ellipse cx="31" cy="30" rx="3" ry="1.5" fill="#6050C8" />
+          {/* Engine glow/exhaust */}
+          <circle cx="22" cy="30" r="1" fill="rgba(224,64,160,0.8)" />
+          <circle cx="34" cy="30" r="1" fill="rgba(224,64,160,0.8)" />
         </g>
       </svg>
     </div>
