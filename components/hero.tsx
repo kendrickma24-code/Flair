@@ -15,33 +15,6 @@ export function Hero() {
         <GlobeCanvas />
       </div>
 
-      {/* Animated plane */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        <svg
-          className="absolute w-8 h-8 opacity-0 drop-shadow-[0_0_6px_rgba(123,95,232,0.7)] animate-plane-fly"
-          viewBox="0 0 32 32"
-          fill="none"
-        >
-          <defs>
-            <linearGradient
-              id="pg"
-              x1="0"
-              y1="0"
-              x2="32"
-              y2="32"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop offset="0%" stopColor="#7B5FE8" />
-              <stop offset="100%" stopColor="#E040A0" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M2 16 L26 6 L28 10 L18 14 L22 26 L18 24 L14 18 L8 20 L9 24 L5 22 Z"
-            fill="url(#pg)"
-          />
-        </svg>
-      </div>
-
       {/* Badge */}
       <div className="animate-fade-up inline-flex items-center gap-2 bg-[rgba(123,95,232,0.1)] text-[var(--accent-purple-light)] text-xs font-medium px-4 py-1.5 rounded-full border border-[rgba(123,95,232,0.22)] mb-8 relative z-10 tracking-wide uppercase">
         <div className="w-1.5 h-1.5 rounded-full bg-[var(--accent-purple-light)] animate-pulse-dot" />

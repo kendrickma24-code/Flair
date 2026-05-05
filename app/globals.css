@@ -73,23 +73,6 @@ body {
   }
 }
 
-@keyframes planeFly {
-  0% {
-    opacity: 0;
-    transform: translate(-60px, 60vh) rotate(-18deg);
-  }
-  5% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(calc(100vw + 60px), 15vh) rotate(-18deg);
-  }
-}
-
 .animate-fade-up {
   animation: fadeUp 0.5s ease both;
 }
@@ -100,8 +83,4 @@ body {
 
 .animate-float {
   animation: float 5s ease-in-out infinite;
-}
-
-.animate-plane-fly {
-  animation: planeFly 12s linear infinite;
 }
