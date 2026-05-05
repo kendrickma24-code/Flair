@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+:root {
+  --background: #080C14;
+  --background-card: #0E1420;
+  --background-card-hover: #131926;
+  --foreground: #FFFFFF;
+  --muted: #7A8499;
+  --muted-dim: #4A5268;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-mid: rgba(255, 255, 255, 0.14);
+  --accent-blue: #4A9EF8;
+  --accent-blue-dim: rgba(74, 158, 248, 0.12);
+  --accent-purple: #7B5FE8;
+  --accent-purple-light: #B09DF7;
+  --accent-pink: #E040A0;
+  --radius: 0.75rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Gradient utilities */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+}
+
+/* Animation keyframes */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(0.5);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-16px);
+  }
+}
+
+@keyframes planeFly {
+  0% {
+    opacity: 0;
+    transform: translate(-60px, 60vh) rotate(-18deg);
+  }
+  5% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(100vw + 60px), 15vh) rotate(-18deg);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.5s ease both;
+}
+
+.animate-pulse-dot {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-plane-fly {
+  animation: planeFly 12s linear infinite;
+}
